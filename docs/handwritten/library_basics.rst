@@ -1,10 +1,10 @@
 TODO
 
-To import ``plotLP``, just use :
+To import ``template_name``, just use :
 
 .. code-block:: python
 
-   import plotlp
+   import template_lowername
 
 .. code-block:: python
 

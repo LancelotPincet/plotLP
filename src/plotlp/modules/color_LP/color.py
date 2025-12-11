@@ -169,6 +169,10 @@ class Color(str) :
         object.__setattr__(instance, 'B', int(B))
         object.__setattr__(instance, 'alpha', float(alpha))
         return instance
+    def __repr__(self) :
+        return self
+    def __str__(self) :
+        return self
 
     # RGBA
     @property

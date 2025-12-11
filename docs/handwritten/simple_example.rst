@@ -2,5 +2,5 @@ TODO
 
 .. code-block:: python
 
-    import plotlp
+    import template_lowername
     # TODO

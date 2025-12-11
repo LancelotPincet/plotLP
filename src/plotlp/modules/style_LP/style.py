@@ -15,6 +15,7 @@ This module defines style informations for matplotlib.
 # %% Libraries
 import importlib
 from pathlib import Path
+from plotlp import color, cmap # do not remove even if unused
 import matplotlib.pyplot as plt
 
 
@@ -50,15 +51,7 @@ def style(name:str="plt") :
     if name not in styles and name not in plt.style.library :
         raise SyntaxError(f'{name} was not recognized as a valid style, please chose in : {styles+list(plt.style.library.keys())}')
     
-    dic = get_dict(name)
-
-    # Update colors
-    colors = list(dic['axes.prop_cycle'])
-    for key, value in dic.items() :
-        if isinstance(value,str) and value.startswith('C') and len(value) == 2 :
-            dic[key] = colors[int(value[-1])]['color']
-    return dic
-
+    return get_dict(name)
 
 styles = sorted([file.stem for file in (Path(__file__).parent / "styles").iterdir() if not file.name.startswith("__")])
 def get_dict(name) :

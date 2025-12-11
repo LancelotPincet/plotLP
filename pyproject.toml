@@ -4,7 +4,7 @@ version = "0.1.3"
 description = "A library wrapper around matplotlib for custom plots."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [ "corelp", "cycler", "ipykernel", "matplotlib", "pytest", "sphinx", "sphinx-design", "sphinx-rtd-theme", "spyder-kernels", "toml",]
+dependencies = [ "corelp", "cycler", "ipykernel", "matplotlib", "numpy", "pillow", "pytest", "sphinx", "sphinx-design", "sphinx-rtd-theme", "spyder-kernels", "toml",]
 
 [build-system]
 requires = [ "uv_build>=0.8.8,<0.9.0",]

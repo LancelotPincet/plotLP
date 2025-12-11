@@ -20,7 +20,7 @@ style = {
     'errorbar.capsize' : 2, #length of end cap on error bars in pixels
     'figure.dpi' : 50, #figure dots per inch
     'figure.facecolor' : 'C9', #figure facecolor
-    'figure.figsize' : [6.4, 6.4 / (1 + 5 ** 0.5) * 2], #figure size in inches
+    'figure.figsize' : [8.7, 8.7 / (1 + 5 ** 0.5) * 2], #figure size in inches
     'figure.edgecolor' : 'C9', #figure edgecolor
     'grid.color' : 'C8', #grid color
     'hatch.color' : 'C7',
