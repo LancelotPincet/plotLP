@@ -5,7 +5,7 @@
 Beginner guide
 ==============
 
-New to **template_name**?
+New to **plotLP**?
 Check out the **Beginner Guide** to get up and running.
 
 .. toctree::

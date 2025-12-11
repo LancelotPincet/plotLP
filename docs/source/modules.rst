@@ -5,7 +5,7 @@
 Modules
 =======
 
-Here are the references to the various modules to import in **template_name**.
+Here are the references to the various modules to import in **plotLP**.
 
 .. toctree::
    :maxdepth: 1

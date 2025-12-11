@@ -5,7 +5,7 @@
 Scripts
 =======
 
-Here are the references to the various scripts provided with **template_name**.
+Here are the references to the various scripts provided with **plotLP**.
 
 .. toctree::
    :maxdepth: 1
