@@ -37,7 +37,7 @@ def save_color(pos, name, color, prefix) :
 
 
 # %% name test
-@pytest.mark.parametrize("wl", [i for i in range(200, 1001, 25)])
+@pytest.mark.parametrize("wl", [i for i in np.linspace(380, 750, 10)])
 def test_wl(wl) :
     '''
     Test color with name values

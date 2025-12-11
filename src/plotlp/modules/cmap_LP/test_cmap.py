@@ -18,59 +18,44 @@ cmap : This module adds custom cmaps to matplotlib.
 from corelp import print, debug
 import pytest
 from plotlp import cmap
+from matplotlib import pyplot as plt
+import numpy as np
 debug_folder = debug(__file__)
 
+v = np.arange(101)
+X,Y = np.meshgrid(v,v)
+
+# %% Function test
 
 
 # %% Function test
-def test_function() :
+def save_color(name, color) :
     '''
-    Test cmap function
+    save a color
     '''
-    print('Hello world!')
+    figure = plt.figure()
+    plt.imshow(np.asarray([[color.RGBA]]))
+    plt.savefig(debug_folder / f'_color_{name}_{color}.png')
+    plt.close(figure)
 
 
 
-# %% Instance fixture
-@pytest.fixture()
-def instance() :
-    '''
-    Create a new instance at each test function
-    '''
-    return cmap()
+cmaps = ['cmapLP', 'coldLP', 'warmLP', 'gradientLP', 'convergingLP', 'divergingLP', 'rainbowLP',
+        'hot', 'jet', 'viridis']
 
-def test_instance(instance) :
+@pytest.mark.parametrize("name", cmaps)
+def test_names(name) :
     '''
-    Test on fixture
+    Test cmaps with name values
     '''
-    pass
+    figure = plt.figure()
+    plt.imshow(X, cmap=name)
+    plt.savefig(debug_folder / f'{name}.png')
+    plt.close(figure)
 
-
-# %% Returns test
-@pytest.mark.parametrize("args, kwargs, expected, message", [
-    #([], {}, None, ""),
-    ([], {}, None, ""),
-])
-def test_returns(args, kwargs, expected, message) :
-    '''
-    Test cmap return values
-    '''
-    assert cmap(*args, **kwargs) == expected, message
-
-
-
-# %% Error test
-@pytest.mark.parametrize("args, kwargs, error, error_message", [
-    #([], {}, None, ""),
-    ([], {}, None, ""),
-])
-def test_errors(args, kwargs, error, error_message) :
-    '''
-    Test cmap error values
-    '''
-    with pytest.raises(error, match=error_message) :
-        cmap(*args, **kwargs)
-
+    cm = cmap(name)
+    color = cm.color
+    save_color(name, color)
 
 
 # %% Test function run
