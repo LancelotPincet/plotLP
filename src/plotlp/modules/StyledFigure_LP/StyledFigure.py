@@ -24,6 +24,7 @@ import gc
 from io import BytesIO
 from pathlib import Path
 from PIL import Image
+import string
 
 
 
@@ -148,6 +149,19 @@ class StyledFigure(Figure) :
     def add_axes(self, *args, **kwargs):
         with plt.style.context(self.style) :
             return super().add_axes(*args, **kwargs)
+
+
+
+    # Paper index
+    paper_index_kwargs = {'size': 20, 'weight': 'bold'}
+    def paper_index(self, axes=None, **kwargs) :
+        with plt.style.context(self.style) :
+            if axes is None :
+                axes = self.plot_axes
+            kw = self.paper_index_kwargs.copy()
+            kw.update(kwargs)
+            for n, ax in enumerate(axes):
+                ax.text(-0.1, 1.1, string.ascii_lowercase[n], transform=ax.transAxes, **kw)
 
 
 

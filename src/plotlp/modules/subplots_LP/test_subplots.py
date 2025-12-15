@@ -43,6 +43,7 @@ def test_subplot() :
     fig.axis = 1
     fig.axis.set_ylabel('axis 1')
     fig.title = 'test title'
+    fig.paper_index()
     plt.savefig(path_png = debug_folder / 'subplot_png', close=False)
 
 
