@@ -168,10 +168,8 @@ class StyledFigure(Figure) :
     # Colorbar
     barname = {'rotation':270,'labelpad':10}
     cax = {'size':"5%", 'pad':0.05}
-    def colorbar(self, mappable=None, cax=None, ax=None, barname=None, **kwargs) :
+    def colorbar(self, mappable, cax=None, ax=None, barname=None, **kwargs) :
         with plt.style.context(self.style) :
-            if mappable is None :
-                mappable = self.gci()
             if cax is None :
                 if ax is None :
                     ax = mappable.axes
@@ -228,6 +226,7 @@ class StyledFigure(Figure) :
 
     # Polish
     tight = True
+    polish_figure = True
     def polish(self) :
         with plt.style.context(self.style) :
             for axis_num in range(self.naxes) :
@@ -239,21 +238,21 @@ class StyledFigure(Figure) :
 
 
     # Savefig
-    def savefig(self, path=None, *, polish=True, path_png=None, path_pdf=None, close=True, **kwargs) :
-        if polish :
+    def savefig(self, path=None, *, polish=None, path_png=None, path_pdf=None, close=True, **kwargs) :
+        if polish is True or polish is None and self.polish_figure :
             self.polish()
 
         with plt.style.context(self.style) :
-            # Path
-            path_png = Path(path_png) if path_png is not None else Path(path) if path is not None else None
-            path_pdf = Path(path_pdf) if path_pdf is not None else Path(path) if path is not None else None
-        
+
             # Saving in array
             if isinstance(path, BytesIO) :
                 super().savefig(path, **kwargs)
         
             # Saving in file
             else :
+                path_png = Path(path_png) if path_png is not None else Path(path) if path is not None and path.suffix != '.pdf' else None
+                path_pdf = Path(path_pdf) if path_pdf is not None else Path(path) if path is not None and path.suffix != '.png'  else None
+        
                 if path_png is not None :
                     super().savefig(path_png.with_suffix('.png'), **kwargs)
                 if path_pdf is not None :

@@ -62,13 +62,31 @@ class StyledAxes(Axes) :
         return self.figure.style
 
     # Imshow
-    def imshow(self, *args, barname=None, **kwargs) :
+    def imshow(self, X, *args, barname=None, coordinates=None, **kwargs) :
         with plt.style.context(self.style):
-            im = super().imshow(*args, **kwargs)
+            if coordinates is not None :
+                x, y = coordinates
+                dx, dy = (x[-1]-x[0]) / (len(x)-1) / 2, (y[-1]-y[0]) / (len(y)-1) / 2
+                extent = [x[0]-dx, x[-1]+dx, y[0]-dy, y[-1]+dy]
+                kwargs.update(dict(extent=extent, aspect='auto', origin='lower'))
+            im = super().imshow(X, *args, **kwargs)
+            if coordinates is not None :
+                self.invert_yaxis()
+                Ny, Nx = X.shape
+                self.set_box_aspect(Ny / Nx)
+                self.polish_axis = False
             if barname is not None :
                 self.figure.colorbar(im, barname=barname)
+
             return im
     
+    # Pcolormesh
+    def pcolormesh(self, *args, cmap=None, **kwargs):
+        with plt.style.context(self.style):
+            if cmap is None:
+                cmap = plt.get_cmap(plt.rcParams['image.cmap'])
+            return super().pcolormesh(*args, cmap=cmap, **kwargs)
+
     # Implot
     def implot(self, img, x, y, w, h, zorder=3, **kwargs) :
         newaxe = inset_axes(self, [x, y, w, h], transform=self.transData, zorder=zorder, axes_class=StyledAxes)
@@ -85,7 +103,9 @@ class StyledAxes(Axes) :
 
 
 
+    polish_axis = True
     def polish(self) :
+        if not self.polish_axis : return
         if self.polish_grids : self.grids()
         if self.polish_imscale : self.imscale()
         if self.polish_noborders : self.noborders()
@@ -118,7 +138,7 @@ class StyledAxes(Axes) :
             if self.get_autoscalex_on() :
                 self.set_xlim(-0.5, xmax - 0.5)
             if self.get_autoscaley_on() :
-                self.set_ylim(-0.5, ymax - 0.5)
+                self.set_ylim(ymax - 0.5, -0.5)
 
     # noborders
     @prop()
