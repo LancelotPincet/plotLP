@@ -15,7 +15,7 @@ plt : matplotlib.pyplot shortcut
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 from plotlp import plt
 debug_folder = debug(__file__)
 

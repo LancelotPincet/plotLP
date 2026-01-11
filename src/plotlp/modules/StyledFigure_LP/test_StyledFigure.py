@@ -15,7 +15,7 @@ StyledFigure : A class defining figures with custom styles included inside.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 from plotlp import StyledFigure
 debug_folder = debug(__file__)
 

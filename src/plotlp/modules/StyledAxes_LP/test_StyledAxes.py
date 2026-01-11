@@ -15,7 +15,7 @@ StyledAxes : A class using stored styles inside.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 from plotlp import StyledAxes
 debug_folder = debug(__file__)
 

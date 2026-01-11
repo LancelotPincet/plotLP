@@ -15,7 +15,7 @@ color : Gets a custom Color object.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 import pytest
 from plotlp import color
 from matplotlib import pyplot as plt

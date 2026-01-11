@@ -15,7 +15,7 @@ cmap : This module adds custom cmaps to matplotlib.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 import pytest
 from plotlp import cmap
 from matplotlib import pyplot as plt

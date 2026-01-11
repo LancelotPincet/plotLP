@@ -15,7 +15,7 @@ imgfigure : Figure function for showing images.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 from plotlp import imgfigure, plt
 import numpy as np
 debug_folder = debug(__file__)

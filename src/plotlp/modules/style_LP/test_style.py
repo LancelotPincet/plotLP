@@ -15,7 +15,7 @@ style : This module defines style informations for matplotlib.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 import pytest
 from plotlp import style
 from matplotlib import pyplot as plt

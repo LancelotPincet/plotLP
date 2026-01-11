@@ -15,7 +15,7 @@ figure : Wrapper function defining a StyledFigure.
 
 
 # %% Libraries
-from corelp import print, debug
+from corelp import debug
 from plotlp import figure, plt
 import numpy as np
 debug_folder = debug(__file__)
