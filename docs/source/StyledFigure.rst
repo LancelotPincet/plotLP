@@ -1,5 +1,5 @@
 plotlp.StyledFigure module
-==========================
+template[libequals]====================
 
 .. autoclass:: plotlp.StyledFigure
    :members: 

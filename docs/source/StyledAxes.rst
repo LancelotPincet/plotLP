@@ -1,5 +1,5 @@
 plotlp.StyledAxes module
-========================
+template[libequals]==================
 
 .. autoclass:: plotlp.StyledAxes
    :members: 
