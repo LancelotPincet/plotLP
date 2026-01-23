@@ -24,28 +24,6 @@ sources = {
 'subplots': 'plotlp.modules.subplots_LP.subplots'
 }
 
-from importlib import resources
-from contextlib import contextmanager
-
-@contextmanager
-def resources_dir():
-    with resources.as_file(resources.files("plotlp.resources")) as path:
-        yield path
-if False: 
-    import plotlp.resources
-
-# %% Hidden imports
-if False :
-    import plotlp.modules.StyledAxes_LP.StyledAxes
-    import plotlp.modules.StyledFigure_LP.StyledFigure
-    import plotlp.modules.cmap_LP.cmap
-    import plotlp.modules.color_LP.color
-    import plotlp.modules.figure_LP.figure
-    import plotlp.modules.imgfigure_LP.imgfigure
-    import plotlp.modules.plt_LP.plt
-    import plotlp.modules.style_LP.style
-    import plotlp.modules.subplots_LP.subplots
-
 
 
 # %% Lazy imports
