@@ -1,6 +1,6 @@
 [project]
 name = "plotlp"
-version = "0.1.7"
+version = "0.1.8"
 description = "A library wrapper around matplotlib for custom plots."
 readme = "README.md"
 requires-python = ">=3.12"
