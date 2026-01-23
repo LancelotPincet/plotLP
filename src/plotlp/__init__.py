@@ -11,7 +11,7 @@ A library wrapper around matplotlib for custom plots.
 
 
 
-# %% Source code
+# %% Source import
 sources = {
 'StyledAxes': 'plotlp.modules.StyledAxes_LP.StyledAxes',
 'StyledFigure': 'plotlp.modules.StyledFigure_LP.StyledFigure',
@@ -23,6 +23,20 @@ sources = {
 'style': 'plotlp.modules.style_LP.style',
 'subplots': 'plotlp.modules.subplots_LP.subplots'
 }
+
+
+
+# %% Hidden imports
+if False :
+    import plotlp.modules.StyledAxes_LP.StyledAxes
+    import plotlp.modules.StyledFigure_LP.StyledFigure
+    import plotlp.modules.cmap_LP.cmap
+    import plotlp.modules.color_LP.color
+    import plotlp.modules.figure_LP.figure
+    import plotlp.modules.imgfigure_LP.imgfigure
+    import plotlp.modules.plt_LP.plt
+    import plotlp.modules.style_LP.style
+    import plotlp.modules.subplots_LP.subplots
 
 
 
