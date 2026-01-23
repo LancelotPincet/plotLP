@@ -24,7 +24,13 @@ sources = {
 'subplots': 'plotlp.modules.subplots_LP.subplots'
 }
 
+from importlib import resources
+from contextlib import contextmanager
 
+@contextmanager
+def resources_dir():
+    with resources.as_file(resources.files("plotlp.resources")) as path:
+        yield path
 
 # %% Hidden imports
 if False :
