@@ -1,7 +1,7 @@
-plotlp.StyledFigure module
-template[libequals]====================
+template_lowername.StyledFigure module
+template_equals====================
 
-.. autoclass:: plotlp.StyledFigure
+.. autoclass:: template_lowername.StyledFigure
    :members: 
    :show-inheritance:
    :undoc-members:

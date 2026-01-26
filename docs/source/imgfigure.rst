@@ -1,4 +1,4 @@
-plotlp.imgfigure module
-=======================
+template_lowername.imgfigure module
+template_equals=================
 
-.. autofunction:: plotlp.imgfigure
+.. autofunction:: template_lowername.imgfigure

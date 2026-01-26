@@ -1,4 +1,4 @@
-plotlp.color module
-===================
+template_lowername.color module
+template_equals=============
 
-.. autofunction:: plotlp.color
+.. autofunction:: template_lowername.color

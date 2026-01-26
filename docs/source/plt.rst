@@ -1,4 +1,4 @@
-plotlp.plt module
-=================
+template_lowername.plt module
+template_equals===========
 
-.. autofunction:: plotlp.plt
+.. autofunction:: template_lowername.plt
