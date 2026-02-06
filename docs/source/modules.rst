@@ -11,12 +11,12 @@ Here are the references to the various modules to import in **plotLP**.
    :maxdepth: 1
    :caption: Modules
 
-   plt
-   StyledAxes
-   style
-   figure
    StyledFigure
-   cmap
+   figure
+   plt
+   subplots
+   style
    imgfigure
    color
-   subplots
+   StyledAxes
+   cmap
