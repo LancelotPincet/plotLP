@@ -13,27 +13,30 @@ This module allows to create animations from plots
 
 
 # %% Libraries
-from pathlib import Path
+from corelp import Path
+from matplotlib import pyplot as plt
+import imageio
+import numpy as np
 
 
 
 # %% Function
-def make_animation(saving_path:str, animation_file=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', *, folder2animate=None, extension2animate=None, function2animate=None, parameter2animate=None, value2animate=None, **kwargs) :
+def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', iterator=range, *, extension2animate='.png', function2animate=None, parameter2animate=None, value2animate=None, dpi:int=300, **kwargs) :
     '''
     This module allows to create animations from plots, chose from animating images from a folder or through live generation with a function
     
     Parameters
     ----------
-    saving_path : str or pathlib.Path
+    export_path : str or pathlib.Path
         Path where to save animation.
+    name : str
+        name of animation file.
     fps : float
         Animation Frames Per Second.
     loop : bool
         True to loop animation.
     pingpong : bool
         True to make animation back and forth.
-    folder2animate : str
-        name of folder filled of images to animate
     extension2animate : str
         Extension of animated function in folder.
     function2animate : function
@@ -47,22 +50,72 @@ def make_animation(saving_path:str, animation_file=None, fps:float=24., loop:boo
     --------
     >>> from plotlp import make_animation
     ...
-    >>> make_animation(saving_path, function2animate=myplottingfunction, parameter2animate=""myparameter", value2animate=np.linspace(mini,maxi,1000), **kwargs) # from function
-    >>> make_animation(saving_path, folder2animate=myfolder, extension2animate='.png') # from folder
+    >>> make_animation(saving_path, "myanimation", function2animate=myplottingfunction, parameter2animate=""myparameter", value2animate=np.linspace(mini,maxi,1000), **kwargs) # from function
+    >>> make_animation(saving_path, "myanimation", extension2animate='.tif') # from folder
     '''
 
     # Path
-    saving_path = Path(saving_path)
-    if animation_file is not None : saving_path = saving_path / animation_file
-    saving_path = saving_path.with_suffix(extension)
+    export_path = Path(export_path)
+    if name is not None : export_path = export_path / name
+    export_path = export_path.with_suffix(extension)
 
-    # Animation modes
-    if folder2animate is not None :
-        folder_animation(saving_path, fps, loop, pingpong, extension)
-    elif function2animate is not None :
+    # Animation modalities
+    if function2animate is None :
+        folder_animation(export_path, fps, loop, pingpong, extension2animate, iterator)
+    else :
+        function_animation(export_path, fps, loop, pingpong, function2animate, parameter2animate, value2animate, dpi, iterator, **kwargs)
 
-    return None
 
+
+def folder_animation(export_path, fps, loop, pingpong, extension2animate, iterator) :
+    folder_path = export_path.with_suffix('')
+
+    # List and naturally sort all PNG files
+    image_files = [img for img in folder_path.iterdir() if img.suffix == extension2animate]
+    if not image_files:
+        raise ValueError("No PNG images found in the folder.")
+    image_files.sort()
+    if pingpong:
+        image_files = image_files + image_files[-2:0:-1]
+
+    # Stream images one at a time and save to GIF
+    with get_writer(export_path, fps, loop) as writer :
+        for file in iterator(image_files):
+            frame = imageio.imread(file)
+            writer.append_data(frame)
+
+
+
+def function_animation(export_path, fps, loop, pingpong, function2animate, parameter2animate, value2animate, dpi, iterator, **kwargs) :
+
+    # List of parameter
+    if parameter2animate is None:
+        raise ValueError("parameter2animate must be provided when function2animate is used")
+    if pingpong:
+        value2animate = np.hstack((value2animate, value2animate[-2:0:-1]))
+
+    # Stream images one at a time and save to GIF
+    with get_writer(export_path, fps, loop) as writer :
+        for value in iterator(value2animate):
+            kwargs[parameter2animate] = value
+            fig = function2animate(**kwargs)
+            fig.set_dpi(dpi)
+            fig.canvas.draw()
+            frame = np.asarray(fig.canvas.buffer_rgba())
+            frame = frame[:, :, :3]  # drop alpha channel
+            writer.append_data(frame)
+            plt.close(fig)
+
+
+
+def get_writer(export_path, fps, loop) :
+    match export_path.suffix :
+        case '.gif' :
+            return imageio.get_writer(export_path, mode='I', fps=fps, loop=0 if loop else 1)
+        case '.mp4' :
+           return imageio.get_writer(export_path, fps=fps, codec='libx264', quality=8, format='ffmpeg')
+        case _ :
+            raise SyntaxError(f'Animation extension not recognized: -->{export_path.suffix}<--')
 
 
 
