@@ -13,6 +13,7 @@ Here are the references to the various modules to import in **plotLP**.
 
    StyledFigure
    figure
+   make_animation
    plt
    subplots
    style

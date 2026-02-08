@@ -19,6 +19,7 @@ sources = {
 'color': 'plotlp.modules.color_LP.color',
 'figure': 'plotlp.modules.figure_LP.figure',
 'imgfigure': 'plotlp.modules.imgfigure_LP.imgfigure',
+'make_animation': 'plotlp.modules.make_animation_LP.make_animation',
 'plt': 'plotlp.modules.plt_LP.plt',
 'style': 'plotlp.modules.style_LP.style',
 'subplots': 'plotlp.modules.subplots_LP.subplots'
