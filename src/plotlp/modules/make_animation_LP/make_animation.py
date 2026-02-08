@@ -16,6 +16,7 @@ This module allows to create animations from plots
 from corelp import Path
 from matplotlib import pyplot as plt
 import imageio
+import io
 import numpy as np
 
 
@@ -100,9 +101,10 @@ def function_animation(export_path, fps, loop, pingpong, function2animate, param
             kwargs[parameter2animate] = value
             fig = function2animate(**kwargs)
             fig.set_dpi(dpi)
-            fig.canvas.draw()
-            frame = np.asarray(fig.canvas.buffer_rgba())
-            frame = frame[:, :, :3]  # drop alpha channel
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", dpi=dpi)
+            buf.seek(0)
+            frame = imageio.imread(buf)
             writer.append_data(frame)
             plt.close(fig)
 
