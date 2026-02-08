@@ -112,10 +112,10 @@ def function_animation(export_path, fps, loop, pingpong, function2animate, param
 
 def get_writer(export_path, fps, loop) :
     match export_path.suffix :
-        case '.gif' :
-            return imageio.get_writer(export_path, mode='I', fps=fps, loop=0 if loop else 1)
         case '.mp4' :
            return imageio.get_writer(export_path, fps=fps, codec='libx264', quality=8, format='ffmpeg')
+        case '.gif' :
+            return imageio.get_writer(export_path, mode='I', fps=fps, loop=0 if loop else 1)
         case _ :
             raise SyntaxError(f'Animation extension not recognized: -->{export_path.suffix}<--')
 
