@@ -4,7 +4,7 @@ version = "0.1.11"
 description = "A library wrapper around matplotlib for custom plots."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [ "corelp", "cycler", "imageio", "imageio-ffmpeg", "matplotlib", "numpy", "pillow",]
+dependencies = [ "corelp", "cycler", "imageio", "imageio-ffmpeg", "matplotlib", "numpy", "pillow", "tifffile",]
 
 [build-system]
 requires = [ "uv_build",]

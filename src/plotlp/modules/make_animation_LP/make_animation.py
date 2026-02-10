@@ -18,11 +18,12 @@ from matplotlib import pyplot as plt
 import imageio
 import io
 import numpy as np
+import tifffile as tiff
 
 
 
 # %% Function
-def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', iterator=range, *, extension2animate='.png', array2animate=None, function2animate=None, parameter2animate=None, value2animate=None, dpi:int=300, **kwargs) :
+def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', iterator=range, *, extension2animate='.png', array2animate=None, tif2animate=None, key2animate=None, function2animate=None, parameter2animate=None, value2animate=None, dpi:int=300, **kwargs) :
     '''
     This module allows to create animations from plots, chose from animating images from a folder or through live generation with a function
     
@@ -42,6 +43,10 @@ def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pi
         Extension of animated function in folder.
     array2animate : function
         Array to animate.
+    tif2animate : function
+        Array to tif2animate.
+    key2animate : function
+        Keys of tif to animate.
     function2animate : function
         Function to animate.
     parameter2animate : str
@@ -61,12 +66,15 @@ def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pi
     export_path = Path(export_path)
     if name is not None : export_path = export_path / name
     export_path = export_path.with_suffix(extension)
+    fps = float(fps)
 
     # Animation modalities
     if function2animate is not None :
         function_animation(export_path, fps, loop, pingpong, function2animate, parameter2animate, value2animate, dpi, iterator, **kwargs)
     elif array2animate is not None :
         array_animation(export_path, fps, loop, pingpong, array2animate, iterator)
+    elif tif2animate is not None :
+        tif_animation(export_path, fps, loop, pingpong, tif2animate, key2animate, iterator)
     else :
         folder_animation(export_path, fps, loop, pingpong, extension2animate, iterator)
 
@@ -92,7 +100,6 @@ def folder_animation(export_path, fps, loop, pingpong, extension2animate, iterat
 
 
 def array_animation(export_path, fps, loop, pingpong, array2animate, iterator) :
-    folder_path = export_path.with_suffix('')
     array2animate = np.asarray(array2animate)
     if pingpong:
         array2animate = np.concatenate(
@@ -100,17 +107,31 @@ def array_animation(export_path, fps, loop, pingpong, array2animate, iterator) :
             axis=0
         )
     
-
-    # Normalize floats → uint8
-    if np.issubdtype(array2animate.dtype, np.floating):
-        array2animate = np.clip(array2animate, 0, 1)
-        array2animate = (array2animate * 255).astype(np.uint8)
-    elif array2animate.dtype != np.uint8:
-        array2animate = array2animate.astype(np.uint8)
-
     # Write frames directly
     with get_writer(export_path, fps, loop) as writer:
         for frame in iterator(array2animate):
+            frame = np.clip(frame / frame.max() * 255, 0, 255).astype(np.uint8)
+            writer.append_data(frame)
+
+
+
+def tif_animation(export_path, fps, loop, pingpong, tif2animate, key2animate, iterator) :
+    tif2animate = (export_path.parent / tif2animate).with_suffix('.tif')
+    if key2animate is None :
+        with tiff.TiffFile(tif2animate) as tif:
+            num_pages = len(tif.pages)
+        key2animate = np.arange(num_pages)
+    if pingpong:
+        key2animate = np.concatenate(
+            (key2animate, key2animate[-2:0:-1]),
+            axis=0
+        )
+    
+    # Write frames directly
+    with get_writer(export_path, fps, loop) as writer:
+        for i in iterator(key2animate):
+            frame = tiff.imread(tif2animate, key=i)
+            frame = np.clip(frame / frame.max() * 255, 0, 255).astype(np.uint8)
             writer.append_data(frame)
 
 
