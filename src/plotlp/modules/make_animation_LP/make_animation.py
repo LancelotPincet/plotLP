@@ -22,7 +22,7 @@ import numpy as np
 
 
 # %% Function
-def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', iterator=range, *, extension2animate='.png', function2animate=None, parameter2animate=None, value2animate=None, dpi:int=300, **kwargs) :
+def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pingpong:bool=False, extension:str='.gif', iterator=range, *, extension2animate='.png', array2animate=None, function2animate=None, parameter2animate=None, value2animate=None, dpi:int=300, **kwargs) :
     '''
     This module allows to create animations from plots, chose from animating images from a folder or through live generation with a function
     
@@ -40,6 +40,8 @@ def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pi
         True to make animation back and forth.
     extension2animate : str
         Extension of animated function in folder.
+    array2animate : function
+        Array to animate.
     function2animate : function
         Function to animate.
     parameter2animate : str
@@ -61,10 +63,12 @@ def make_animation(export_path:str, name=None, fps:float=24., loop:bool=True, pi
     export_path = export_path.with_suffix(extension)
 
     # Animation modalities
-    if function2animate is None :
-        folder_animation(export_path, fps, loop, pingpong, extension2animate, iterator)
-    else :
+    if function2animate is not None :
         function_animation(export_path, fps, loop, pingpong, function2animate, parameter2animate, value2animate, dpi, iterator, **kwargs)
+    elif array2animate is not None :
+        array_animation(export_path, fps, loop, pingpong, array2animate, iterator)
+    else :
+        folder_animation(export_path, fps, loop, pingpong, extension2animate, iterator)
 
 
 
@@ -83,6 +87,30 @@ def folder_animation(export_path, fps, loop, pingpong, extension2animate, iterat
     with get_writer(export_path, fps, loop) as writer :
         for file in iterator(image_files):
             frame = imageio.imread(file)
+            writer.append_data(frame)
+
+
+
+def array_animation(export_path, fps, loop, pingpong, array2animate, iterator) :
+    folder_path = export_path.with_suffix('')
+    array2animate = np.asarray(array2animate)
+    if pingpong:
+        array2animate = np.concatenate(
+            (array2animate, array2animate[-2:0:-1]),
+            axis=0
+        )
+    
+
+    # Normalize floats → uint8
+    if np.issubdtype(array2animate.dtype, np.floating):
+        array2animate = np.clip(array2animate, 0, 1)
+        array2animate = (array2animate * 255).astype(np.uint8)
+    elif array2animate.dtype != np.uint8:
+        array2animate = array2animate.astype(np.uint8)
+
+    # Write frames directly
+    with get_writer(export_path, fps, loop) as writer:
+        for frame in iterator(array2animate):
             writer.append_data(frame)
 
 
