@@ -238,6 +238,10 @@ class Color(str) :
         lum = Color(k, k, k)
         return self.mix(lum, abs(fact))
 
+    # Return string without alpha (Not a color object anymore)
+    @property
+    def noalpha(self) :
+        return self[:-2]
 
 
 colors = {
