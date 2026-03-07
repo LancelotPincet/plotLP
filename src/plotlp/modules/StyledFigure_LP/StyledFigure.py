@@ -149,6 +149,54 @@ class StyledFigure(Figure) :
     def add_axes(self, *args, **kwargs):
         with plt.style.context(self.style) :
             return super().add_axes(*args, **kwargs)
+    def subplots(self, nrows=1, ncols=1, **kwargs):
+        axs = super().subplots(nrows, ncols, **kwargs)
+        self._axes_grid = np.asarray(axs) # remember the grid
+        return axs
+
+
+
+    @property
+    def merge(self):
+        return _MergeIndexer(self)
+
+    def _normalize_indices(self, idx, size):
+        if isinstance(idx, slice):
+            return list(range(*idx.indices(size)))
+        if isinstance(idx, (list, tuple, np.ndarray)):
+            return list(idx)
+        return [idx]
+
+    def _merge_axes(self, rows, cols):
+
+        if not hasattr(self, "_axes_grid"):
+            raise RuntimeError("merge only works with fig.subplots()")
+
+        grid = self._axes_grid
+        nrows, ncols = grid.shape
+        r = self._normalize_indices(rows, nrows)
+        c = self._normalize_indices(cols, ncols)
+        axes_to_merge = [grid[i, j] for i in r for j in c]
+
+        # gridspec
+        gs = axes_to_merge[0].get_gridspec()
+        rmin, rmax = min(r), max(r) + 1
+        cmin, cmax = min(c), max(c) + 1
+
+        # remove axes
+        for ax in set(axes_to_merge):
+            if ax in self.axes:
+                self.delaxes(ax)
+
+        # create merged axis
+        new_ax = self.add_subplot(gs[rmin:rmax, cmin:cmax])
+
+        # update stored grid
+        for i in r:
+            for j in c:
+                grid[i, j] = new_ax
+
+        return new_ax
 
 
 
@@ -284,6 +332,22 @@ class StyledFigure(Figure) :
     def show(self, *args, **kwargs) :
         with plt.style.context(self.style) :
             super().show(*args,**kwargs)
+
+
+
+class _MergeIndexer:
+
+    def __init__(self, fig):
+        self.fig = fig
+
+    def __getitem__(self, key):
+
+        if not isinstance(key, tuple):
+            key = (key, slice(None))
+
+        r, c = key
+
+        return self.fig._merge_axes(r, c)
 
 
 

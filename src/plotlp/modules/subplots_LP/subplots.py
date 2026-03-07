@@ -34,8 +34,8 @@ def subplots(*args, **kwargs) :
     -------
     fig : StyledFigure
         Figure.
-    axes : tuple[StyledAxes]
-        tuple of axes.
+    axes : numpy.ndarray[StyledAxes]
+        array of axes.
 
     Examples
     --------
