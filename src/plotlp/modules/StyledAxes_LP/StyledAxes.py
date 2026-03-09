@@ -114,7 +114,7 @@ class StyledAxes(Axes) :
     # grids
     @prop()
     def polish_grids(self) :
-        return len(self.lines) > 0 or len(self.collections) > 0
+        return len(self.lines) > 0 or len(self.collections) > 0 or len(self.patches) > 0
     grid_major = {'linestyle':'-', 'alpha':1}
     grid_minor = {'linestyle':'--', 'alpha':0.5}
     def grids(self) :
