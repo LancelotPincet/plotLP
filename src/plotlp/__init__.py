@@ -18,6 +18,7 @@ sources = {
 'cmap': 'plotlp.modules.cmap_LP.cmap',
 'color': 'plotlp.modules.color_LP.color',
 'figure': 'plotlp.modules.figure_LP.figure',
+'gridsubplots': 'plotlp.modules.gridsubplots_LP.gridsubplots',
 'imgfigure': 'plotlp.modules.imgfigure_LP.imgfigure',
 'make_animation': 'plotlp.modules.make_animation_LP.make_animation',
 'plt': 'plotlp.modules.plt_LP.plt',
