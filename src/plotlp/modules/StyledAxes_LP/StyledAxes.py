@@ -61,6 +61,11 @@ class StyledAxes(Axes) :
     def style(self) :
         return self.figure.style
 
+    # Legend
+    def legend(self, *args, **kwargs) :
+        with plt.style.context(self.style):
+            return super().legend(*args, **kwargs)
+
     # Imshow
     def imshow(self, X, *args, barname=None, coordinates=None, **kwargs) :
         with plt.style.context(self.style):
