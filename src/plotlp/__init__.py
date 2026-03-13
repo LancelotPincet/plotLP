@@ -23,7 +23,8 @@ sources = {
 'make_animation': 'plotlp.modules.make_animation_LP.make_animation',
 'plt': 'plotlp.modules.plt_LP.plt',
 'style': 'plotlp.modules.style_LP.style',
-'subplots': 'plotlp.modules.subplots_LP.subplots'
+'subplots': 'plotlp.modules.subplots_LP.subplots',
+'scalebar': 'plotlp.modules.StyledAxes_LP._functions.scalebar'
 }
 
 

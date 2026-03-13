@@ -21,6 +21,7 @@ from corelp import prop
 import numpy as np
 from matplotlib.patches import Rectangle
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from plotlp import scalebar as scbar
 
 
 
@@ -92,6 +93,12 @@ class StyledAxes(Axes) :
                 cmap = plt.get_cmap(plt.rcParams['image.cmap'])
             return super().pcolormesh(*args, cmap=cmap, **kwargs)
 
+    # Bar
+    def bar(self, *args, **kwargs) :
+        with plt.style.context(self.style):
+            self.polish_grids = True
+            return super().bar(*args, **kwargs)
+
     # Implot
     def implot(self, img, x, y, w, h, zorder=3, **kwargs) :
         newaxe = inset_axes(self, [x, y, w, h], transform=self.transData, zorder=zorder, axes_class=StyledAxes)
@@ -102,6 +109,12 @@ class StyledAxes(Axes) :
         clip_rect = Rectangle((0, 0), 1, 1, transform=self.transAxes, facecolor="none")
         im.set_clip_path(clip_rect)
         return im
+
+    # Scalebar
+    def scalebar(self, *args, **kwargs) :
+        with plt.style.context(self.style):
+            scbar(self, *args, **kwargs)
+
 
 
 ### --- Polish functions ---
@@ -119,7 +132,7 @@ class StyledAxes(Axes) :
     # grids
     @prop()
     def polish_grids(self) :
-        return len(self.lines) > 0 or len(self.collections) > 0 or len(self.patches) > 0
+        return len(self.lines) > 0 or len(self.collections) > 0 # no grid with patches here
     grid_major = {'linestyle':'-', 'alpha':1}
     grid_minor = {'linestyle':'--', 'alpha':0.5}
     def grids(self) :
