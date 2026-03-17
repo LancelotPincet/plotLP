@@ -225,7 +225,7 @@ class StyledFigure(Figure) :
                 cax = divider.append_axes("right", **self.cax)
                 cax.is_cbar = True
             cbar = super().colorbar(mappable=mappable, cax=cax, ax=None, **kwargs)
-            if barname is not None :
+            if barname is not None and barname != '':
                 cbar.ax.set_ylabel(barname, **self.barname)
             return cbar
 
