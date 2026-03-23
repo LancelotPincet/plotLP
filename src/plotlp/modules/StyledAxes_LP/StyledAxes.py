@@ -115,6 +115,11 @@ class StyledAxes(Axes) :
         with plt.style.context(self.style):
             scbar(self, *args, **kwargs)
 
+    # Facecolor
+    def set_facecolor(self, *args, **kwargs) :
+        with plt.style.context(self.style):
+            super().set_facecolor(*args, **kwargs)
+    
 
 
 ### --- Polish functions ---

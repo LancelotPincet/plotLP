@@ -107,6 +107,7 @@ class Cmap(LinearSegmentedColormap) :
             }
 
         super().__init__(self.name, cdict)
+        self.set_bad(self.bad)
 
 
 
@@ -171,6 +172,11 @@ class Cmap(LinearSegmentedColormap) :
         node = (erfinv(node)/self.nodebase + 1) / 2
         return (np.round(node * 1000)).astype(int)/1000
 
+    # Bad color
+    _bad = "greyLP" #bad color
+    @prop(variable=True)
+    def bad(self) -> str :
+        return color(auto=self._bad)
 
 
 cmaps = {
