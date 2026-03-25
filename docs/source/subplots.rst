@@ -1,4 +1,4 @@
-template_lowername.subplots module
-template_equals================
+plotlp.subplots module
+======================
 
-.. autofunction:: template_lowername.subplots
+.. autofunction:: plotlp.subplots

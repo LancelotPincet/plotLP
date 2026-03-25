@@ -1,7 +1,7 @@
-template_lowername.StyledAxes module
-template_equals==================
+plotlp.StyledAxes module
+========================
 
-.. autoclass:: template_lowername.StyledAxes
+.. autoclass:: plotlp.StyledAxes
    :members: 
    :show-inheritance:
    :undoc-members:

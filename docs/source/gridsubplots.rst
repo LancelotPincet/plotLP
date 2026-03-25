@@ -1,4 +1,4 @@
-template_lowername.gridsubplots module
-template_equals====================
+plotlp.gridsubplots module
+==========================
 
-.. autofunction:: template_lowername.gridsubplots
+.. autofunction:: plotlp.gridsubplots

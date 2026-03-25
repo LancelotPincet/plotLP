@@ -1,4 +1,4 @@
-template_lowername.style module
-template_equals=============
+plotlp.style module
+===================
 
-.. autofunction:: template_lowername.style
+.. autofunction:: plotlp.style

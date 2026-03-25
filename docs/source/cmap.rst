@@ -1,4 +1,4 @@
-template_lowername.cmap module
-template_equals============
+plotlp.cmap module
+==================
 
-.. autofunction:: template_lowername.cmap
+.. autofunction:: plotlp.cmap

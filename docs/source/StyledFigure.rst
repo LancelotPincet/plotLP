@@ -1,7 +1,7 @@
-template_lowername.StyledFigure module
-template_equals====================
+plotlp.StyledFigure module
+==========================
 
-.. autoclass:: template_lowername.StyledFigure
+.. autoclass:: plotlp.StyledFigure
    :members: 
    :show-inheritance:
    :undoc-members:

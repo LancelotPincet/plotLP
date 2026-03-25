@@ -1,4 +1,4 @@
-template_lowername.make_animation module
-template_equals======================
+plotlp.make_animation module
+============================
 
-.. autofunction:: template_lowername.make_animation
+.. autofunction:: plotlp.make_animation
