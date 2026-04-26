@@ -53,10 +53,10 @@ def style(name:str="plt") :
     
     return get_dict(name)
 
-styles = sorted([file.stem for file in (Path(__file__).parent / "styles").iterdir() if not file.name.startswith("__")])
+styles = sorted([file.stem[1:] for file in (Path(__file__).parent / "_functions").iterdir() if not file.name.startswith("__")])
 def get_dict(name) :
     if name in styles :
-        module = importlib.import_module(f".styles.{name}", package=__package__)
+        module = importlib.import_module(f"._functions._{name}", package=__package__)
         base = getattr(module, "base")
         style = getattr(module, "style")
         main_dict = {} if base is None else get_dict(base)
