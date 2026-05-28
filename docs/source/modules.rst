@@ -15,6 +15,7 @@ Here are the references to the various modules to import in **plotLP**.
    StyledFigure
    cmap
    color
+   compare_distributions
    figure
    gridsubplots
    imgfigure

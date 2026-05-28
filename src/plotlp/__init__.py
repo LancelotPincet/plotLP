@@ -17,6 +17,7 @@ sources = {
 'StyledFigure': 'plotlp.modules.StyledFigure_LP.StyledFigure',
 'cmap': 'plotlp.modules.cmap_LP.cmap',
 'color': 'plotlp.modules.color_LP.color',
+'compare_distributions': 'plotlp.modules.compare_distributions_LP.compare_distributions',
 'figure': 'plotlp.modules.figure_LP.figure',
 'gridsubplots': 'plotlp.modules.gridsubplots_LP.gridsubplots',
 'imgfigure': 'plotlp.modules.imgfigure_LP.imgfigure',
