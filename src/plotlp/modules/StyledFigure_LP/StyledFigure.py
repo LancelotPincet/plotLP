@@ -156,9 +156,14 @@ class StyledFigure(Figure) :
 
 
 
+    # Merging and splitting
     @property
     def merge(self):
         return _MergeIndexer(self)
+
+    @property
+    def split(self):
+        return _SplitIndexer(self)
 
     def _normalize_indices(self, idx, size):
         if isinstance(idx, slice):
@@ -198,6 +203,17 @@ class StyledFigure(Figure) :
 
         return new_ax
 
+    def _split_axis(self, row, col, height, width):
+
+        if not hasattr(self, "_axes_grid"):
+            raise RuntimeError("merge only works with fig.subplots()")
+
+        grid = self._axes_grid
+        axes_to_merge = [grid[i, j] for i in row for j in col]
+
+        # TODO
+
+        return None
 
 
     # Paper index
@@ -348,6 +364,22 @@ class _MergeIndexer:
         r, c = key
 
         return self.fig._merge_axes(r, c)
+
+
+
+class _SplitIndexer:
+
+    def __init__(self, fig):
+        self.fig = fig
+
+    def __getitem__(self, key):
+
+        if not isinstance(key, tuple):
+            raise KeyError(f'Splitting figure axis should only be done with two coordinates, not {key}')
+
+        r, c, h, w = key
+
+        return self.fig._split_axis(r, c, h, w)
 
 
 

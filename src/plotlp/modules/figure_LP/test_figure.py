@@ -31,12 +31,14 @@ def test_plot() :
     y = x**2
     fig = figure(figsize_fact=(0.5,0.5), darkmode=True)
     fig.axis.plot(x, -y)
+    fig.axis.scatter(x, -y)
     plt.plot(x, y)
+    plt.scatter(x, y)
     plt.xlabel('x [ua]')
     fig.axis.set_ylabel('y [ua]')
     fig.title = 'test title'
-    plt.savefig(path_png = debug_folder / 'plot_png', close=False)
-    plt.savefig(path_pdf = debug_folder / 'plot_pdf', close=False)
+    fig.savefig(path_png = debug_folder / 'plot_png', close=False)
+    fig.savefig(path_pdf = debug_folder / 'plot_pdf', close=False)
     plt.savefig(debug_folder / 'plot_all')
 
 def test_imshow() :
@@ -50,8 +52,8 @@ def test_imshow() :
     fig = figure(figsize_ratio=4/3)
     fig.axis.imshow(img, barname='intensity')
     fig.title = 'test title'
-    plt.savefig(path_png = debug_folder / 'imshow_png', close=False)
-    plt.savefig(path_pdf = debug_folder / 'imshow_pdf', close=False)
+    fig.savefig(path_png = debug_folder / 'imshow_png', close=False)
+    fig.savefig(path_pdf = debug_folder / 'imshow_pdf', close=False)
     plt.savefig(debug_folder / 'imshow_all')
 
 

@@ -133,6 +133,7 @@ class StyledAxes(Axes) :
         if self.polish_imscale : self.imscale()
         if self.polish_noborders : self.noborders()
         if self.polish_equiscale : self.equiscale()
+        if self.polish_figscale : self.figscale()
 
     # grids
     @prop()
@@ -179,6 +180,28 @@ class StyledAxes(Axes) :
         with plt.style.context(self.style) :
             self.set_aspect(aspect='equal', adjustable='box')
     
+    # figscale
+    @prop()
+    def polish_figscale(self) :
+        return self.figure.naxes == 1 and not self.polish_imscale and self.polish_equiscale
+    def figscale(self) :
+        with plt.style.context(self.style) :
+            ratio = self.figure.figsize_ratio
+            xmin, xmax = self.get_xlim()
+            ymin, ymax = self.get_ylim()
+            dx, dy = xmax - xmin, ymax - ymin
+            x, y = (xmax + xmin) / 2, (ymax + ymin) / 2
+            if dx / dy != ratio :
+                _dx, _dy = ratio * dy, dx / ratio
+                dx = _dx if _dx > dx else dx
+                dy = _dy if _dy > dy else dy
+            xmin, xmax = x - dx/2, x + dx/2
+            ymin, ymax = y - dy/2, y + dy/2
+            if self.get_autoscalex_on() :
+                self.set_xlim(xmin, xmax)
+            if self.get_autoscaley_on() :
+                self.set_ylim(ymin, ymax)
+    
 
 
 ### --- Regenerate parent class methods in the given style ---
@@ -189,7 +212,7 @@ def is_plottable(method_name, method_obj):
     """
     Returns True if this method should be wrapped automatically.
     """
-    if hasattr(StyledAxes, method_name): # Already overriden
+    if method_name in StyledAxes.__dict__ : # Already overriden
         return False
     if method_name.startswith("_"):      # private
         return False                # handled separately
